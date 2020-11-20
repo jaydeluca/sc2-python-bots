@@ -1,9 +1,6 @@
-# python-sc2-bot-template
+# Starcraft 2 Python Bots
 
-Use this template to start a new Starcraft 2 bot using the [python-sc2](https://github.com/BurnySc2/python-sc2) framework.  
-Then, if you need, follow the tutorial below.  
-
-# Tutorial: Starting a python-sc2 bot
+Based on the [python-sc2](https://github.com/BurnySc2/python-sc2) framework.  
 
 ## Preparing your environment
 
@@ -11,16 +8,7 @@ First you will need to prepare your environment.
 
 ### Prerequisites
 
-##### Python
-
-This tutorial recommends you use Python version 3.7.X because that's what most bot authoring tools use.
-However, Python 3.8 should also work with this tutorial.  
-[Python downloads page](https://www.python.org/downloads/)
-
-##### Git
-
-This tutorial will use git for version control.  
-[Git downloads page](https://git-scm.com/downloads)
+* Python 3.7.X +
 
 ##### Starcraft 2
 
@@ -34,30 +22,12 @@ SC2 should be installed in the default location. Otherwise (and for Linux) you m
 Download the Starcraft 2 Maps from [here](https://github.com/Blizzard/s2client-proto#map-packs).   For this tutorial you will at least need the 'Melee' pack.  
 The maps must be copied into the **root** of the Starcraft 2 maps folder - default location: `C:\Program Files (x86)\StarCraft II\Maps`.
 
-## Creating your bot
-### Setup
-Click the green `Use this template` button above to create your own copy of this bot.  
-Now, using **Windows PowerShell** clone your new repository to your local computer using git:
-```bash
-git clone <your_git_clone_repo_url_here>
-```
-cd into your bot directory:
-```bash
-cd <bot_folder_name_here>
-```
-Create and activate a virtual environment:
+## Setup
+Create and activate a virtual environment, install and run:
 ```bash
 python -m venv venv
-# and then...
-venv\Scripts\activate # Windows
-source venv/bin/activate # Mac OS / Linux
-```
-Install our bot's Python requirements:
-```bash
+source venv/bin/activate
 pip install -r requirements.txt
-```
-Test our bot is working by running it:
-```bash
 python ./run.py
 ```
 If all is well, you should see SC2 load and your bot start mining minerals.  
