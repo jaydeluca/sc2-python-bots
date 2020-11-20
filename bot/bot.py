@@ -1,6 +1,7 @@
 import sc2
 from sc2 import BotAI, Race, UnitTypeId, AbilityId
 from sc2.ids.upgrade_id import UpgradeId
+import random
 
 
 class CompetitiveBot(BotAI):
@@ -39,6 +40,7 @@ class CompetitiveBot(BotAI):
         await self.build_pylons()
         await self.chrono()
         await self.build_gateway()
+        await self.build_forge()
         await self.train_units()
         await self.build_gas()
         await self.build_cyber_core()
@@ -153,7 +155,8 @@ class CompetitiveBot(BotAI):
                 if placement is None:
                     print("can't place")
                     return
-                warpgate.warp_in(UnitTypeId.STALKER, placement)
+                if self.units(UnitTypeId.STALKER).amount < 20:
+                    warpgate.warp_in(UnitTypeId.STALKER, placement)
 
     async def build_four_gates(self):
         if (
@@ -192,12 +195,33 @@ class CompetitiveBot(BotAI):
 
     async def attack(self):
         stalkers = self.units(UnitTypeId.STALKER).ready.idle
-        stalkercount = self.units(UnitTypeId.STALKER).amount
+        stalker_count = self.units(UnitTypeId.STALKER).amount
+
+        zealots = self.units(UnitTypeId.ZEALOT).ready.idle
+        zealot_count = self.units(UnitTypeId.ZEALOT).amount
+        total_unit_count = zealot_count + stalker_count
+
+        attack_threshold = 15
         
         for stalker in stalkers:
-            if stalkercount > 5:
+            if total_unit_count > attack_threshold:
                 stalker.attack(self.enemy_start_locations[0])
 
+        for zealot in zealots:
+            if total_unit_count > attack_threshold:
+                zealot.attack(self.enemy_start_locations[0])
+
+
+    async def build_forge(self):
+        if self.structures(UnitTypeId.PYLON).ready:
+            pylon = self.structures(UnitTypeId.PYLON).ready.random
+            if self.structures(UnitTypeId.CYBERNETICSCORE).ready:
+                if not self.structures(UnitTypeId.FORGE):
+                    if (
+                        self.can_afford(UnitTypeId.FORGE)
+                        and self.already_pending(UnitTypeId.FORGE) == 0
+                    ):
+                        await self.build(UnitTypeId.FORGE, near = pylon)
 
     def on_end(self, result):
         print("Game ended.")
