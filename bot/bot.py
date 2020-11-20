@@ -39,7 +39,7 @@ class CompetitiveBot(BotAI):
         await self.build_pylons()
         await self.chrono()
         await self.build_gateway()
-        await self.train_units(self.structures(UnitTypeId.PYLON).closest_to(self.enemy_start_locations[0]))
+        await self.train_units()
         await self.build_gas()
         await self.build_cyber_core()
         await self.build_four_gates()
@@ -131,7 +131,10 @@ class CompetitiveBot(BotAI):
                         await self.build(UnitTypeId.CYBERNETICSCORE, near = pylon)
 
 
-    async def train_units(self, proxy):
+    async def train_units(self):
+
+        if self.structures(UnitTypeId.PYLON).ready:
+            proxy = self.structures(UnitTypeId.PYLON).closest_to(self.enemy_start_locations[0])
 
         if self.structures(UnitTypeId.WARPGATE).amount == 0:
             for gateway in self.structures(UnitTypeId.GATEWAY).ready:
