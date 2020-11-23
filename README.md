@@ -28,7 +28,7 @@ Create and activate a virtual environment, install and run:
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python ./run.py
+python ./run.py --ComputerRace "Protoss" --ComputerDifficulty "Hard"
 ```
 If all is well, you should see SC2 load and your bot start mining minerals.  
 You can close the SC2 window to stop your bot running. 
